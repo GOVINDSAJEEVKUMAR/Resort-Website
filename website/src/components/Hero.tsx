@@ -13,7 +13,7 @@ const HeroSection = styled.header`
       rgba(7, 11, 30, 0.7),
       rgba(7, 11, 30, 0.65)
     ),
-    url('https://images.unsplash.com/photo-1501117716987-c8e1ecb210cc?auto=format&fit=crop&w=1800&q=80');
+    url('https://i.pinimg.com/1200x/82/87/3d/82873d3e3adb350bdc9d9fccafb46665.jpg');
   background-size: cover;
   background-position: center;
 `;

@@ -62,7 +62,7 @@ const galleryImages = [
   },
   {
     label: 'Wellness Pavilion',
-    src: 'https://images.unsplash.com/photo-1501117716987-c8e1ecb210cc?auto=format&fit=crop&w=1000&q=80',
+    src: 'https://i.pinimg.com/736x/e1/2c/b5/e12cb5bf6722cc47bfcf54562f777160.jpg',
   },
 ];
 

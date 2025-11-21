@@ -122,11 +122,38 @@ function BookingForm() {
   );
 
   const handleChange = (field: keyof BookingFormData, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: field === 'guests' ? Number(value) : value,
-    }));
+    setFormData((prev) => {
+      const updated = {
+        ...prev,
+        [field]: field === 'guests' ? Number(value) : value,
+      };
+      
+      // If arrival date changes and departure date is now invalid, reset departure date
+      if (field === 'arrivalDate' && updated.departureDate) {
+        const arrival = new Date(value);
+        const departure = new Date(updated.departureDate);
+        if (departure <= arrival) {
+          updated.departureDate = '';
+        }
+      }
+      
+      return updated;
+    });
   };
+
+  const today = useMemo(() => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date.toISOString().split('T')[0];
+  }, []);
+
+  const minDepartureDate = useMemo(() => {
+    if (!formData.arrivalDate) return today;
+    const arrival = new Date(formData.arrivalDate);
+    const nextDay = new Date(arrival);
+    nextDay.setDate(nextDay.getDate() + 1);
+    return nextDay.toISOString().split('T')[0];
+  }, [formData.arrivalDate, today]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -221,6 +248,7 @@ function BookingForm() {
             type="date"
             name="arrivalDate"
             required
+            min={today}
             value={formData.arrivalDate}
             onChange={(event) => handleChange('arrivalDate', event.target.value)}
           />
@@ -231,6 +259,7 @@ function BookingForm() {
             type="date"
             name="departureDate"
             required
+            min={minDepartureDate}
             value={formData.departureDate}
             onChange={(event) => handleChange('departureDate', event.target.value)}
           />
@@ -266,4 +295,5 @@ function BookingForm() {
 }
 
 export default BookingForm;
+
 
